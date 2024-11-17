@@ -1,0 +1,39 @@
+version: "3.3"
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      TZ: "America/Detroit"
+      WEBUI_PORT: 8080
+      TORRENTING_PORT: 6881
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # optional but required for Docker integration
+      - /PATH/qtor/data:/config # Make sure your local config directory exists
+      - /PATH/TO/torrents:/downloads/torrents #matches Host directory or CIFS via FSTAB
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+    depends_on:
+      - gluetun
+
+  gluetun:
+    # image: qmcgaw/gluetun
+    image: docker.io/artalius/gluetun-curl:latest
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:  # Refer to https://github.com/qdm12/gluetun-wiki/tree/main/setup/providers 
+      - VPN_SERVICE_PROVIDER=airvpn
+      - VPN_TYPE=openvpn
+      - FIREWALL_VPN_INPUT_PORTS=6881
+      - SERVER_COUNTRIES=United States
+    volumes:
+      - ./gluetun:/gluetun # Make sure exists, for CRT, key, SH, or other files
+      - ./gluetun/openvpn:/etc/openvpn # Make sure exists, for target.ovpn only
+    hostname: gluetun
