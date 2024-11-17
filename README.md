@@ -4,12 +4,15 @@
   
 <h2> Artalius's changes</h2>
 
-Done for MAM support
+Done for [MAM support](https://www.myanonamouse.net/api/endpoint.php/3/json/dynamicSeedbox.php)
 
+Done:
 - add Curl to dockerfile
-- target.ovpn .>
+To-Do, currently manual work
+- /etc/openvpn/target.ovpn >>
   - script-security 2
   - up /gluetun/mam.sh
+
 
 <sub>
 When run outside of *ARR network, indexers will need to route externally and back into Gluetun/VPN.  <br>
