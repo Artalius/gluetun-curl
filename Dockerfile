@@ -13,7 +13,8 @@ FROM --platform=${BUILDPLATFORM} qmcgaw/binpot:mockgen-${MOCKGEN_VERSION} AS moc
 FROM --platform=${BUILDPLATFORM} golang:${GO_VERSION}-alpine${GO_ALPINE_VERSION} AS base
 COPY --from=xcputranslate /xcputranslate /usr/local/bin/xcputranslate
 # Note: findutils needed to have xargs support `-d` flag for mocks stage.
-RUN apk --update add git g++ findutils curl
+RUN apk --update add git g++ findutils
+RUN apk add --no-cache curl
 ENV CGO_ENABLED=0
 COPY --from=golangci-lint /bin /go/bin/golangci-lint
 COPY --from=mockgen /bin /go/bin/mockgen
@@ -225,13 +226,21 @@ ENTRYPOINT ["/gluetun-entrypoint"]
 EXPOSE 8000/tcp 8888/tcp 8388/tcp 8388/udp
 HEALTHCHECK --interval=5s --timeout=5s --start-period=10s --retries=3 CMD /gluetun-entrypoint healthcheck
 ARG TARGETPLATFORM
-RUN apk add --no-cache --update -l wget && \
+RUN apk add --no-cache --update \
+    wget \
+    curl \
+    ca-certificates \
+    iptables \
+    iptables-legacy \
+    tzdata && \
     apk add --no-cache --update -X "https://dl-cdn.alpinelinux.org/alpine/v3.17/main" openvpn\~2.5 && \
+    which curl && \
     mv /usr/sbin/openvpn /usr/sbin/openvpn2.5 && \
     apk del openvpn && \
     apk add --no-cache --update openvpn ca-certificates iptables iptables-legacy tzdata && \
     mv /usr/sbin/openvpn /usr/sbin/openvpn2.6 && \
     rm -rf /var/cache/apk/* /etc/openvpn/*.sh /usr/lib/openvpn/plugins/openvpn-plugin-down-root.so && \
     deluser openvpn && \
+    which curl && \
     mkdir /gluetun
 COPY --from=build /tmp/gobuild/entrypoint /gluetun-entrypoint
