@@ -16,6 +16,24 @@ When run outside of *ARR network, indexers will need to route externally and bac
 I achieved this via public subnetted URLs
 </sub>
 
+Sample File/Folder Tree of my working Docker:
+
+- qtor/
+  - data
+    - qBittorrent
+      - ...
+  - docker-compose.yaml
+  - gluetun
+    - client.crt
+    - client.key
+    - mam.cookies
+    - mam.sh
+    - openvpn
+      - targett.ovpn
+    - servers.json
+
+<br>
+    
 ---
 
 Lightweight swiss-knife-like VPN client to multiple VPN service providers
