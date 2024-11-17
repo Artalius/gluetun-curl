@@ -1,5 +1,25 @@
 # Gluetun VPN client
 
+<div class="center">
+  
+<h2> Artalius's changes</h2>
+
+Done for MAM support
+
+- add Curl to dockerfile
+- target.ovpn .>
+  - script-security 2
+  - up /gluetun/mam.sh
+
+<sub>
+When run outside of *ARR network, indexers will need to route externally and back into Gluetun/VPN.  <br>
+I achieved this via public subnetted URLs
+</sub>
+
+</div>
+
+---
+
 Lightweight swiss-knife-like VPN client to multiple VPN service providers
 
 ![Title image](https://raw.githubusercontent.com/qdm12/gluetun/master/title.svg)
