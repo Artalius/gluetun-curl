@@ -7,7 +7,10 @@ Done for <a href="[https://example.com](https://www.myanonamouse.net/api/endpoin
 Use the provided [docker-compose.yaml.sample](https://github.com/Artalius/gluetun-curl/blob/master/docker-compose.yaml.sample) as a template.
 
 Done:
-- add Curl to dockerfile  <br>
+- add Curl to dockerfile
+
+<br>
+
 To-Do, currently manual work
 - /etc/openvpn/target.ovpn >>
   - script-security 2
