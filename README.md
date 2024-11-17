@@ -4,6 +4,8 @@
 
 Done for <a href="[https://example.com](https://www.myanonamouse.net/api/endpoint.php/3/json/dynamicSeedbox.php)" target="_blank">MAM support</a>
 
+Use the provided [docker-compose.yaml.sample](https://github.com/Artalius/gluetun-curl/blob/master/docker-compose.yaml.sample) as a template.
+
 Done:
 - add Curl to dockerfile
 To-Do, currently manual work
